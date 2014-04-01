@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <property file="src/main/resources/application.development.properties"/>
+  <property file="src/main/resources/application.properties"/>
+  <sql onerror="continue" encoding="UTF-8" userid="${jdbc.username}" driver="${jdbc.driver}" password="${jdbc.password}" url="${jdbc.url}">
+    <classpath refid="maven.test.classpath"/>
+    <transaction src="src/main/resources/sql/h2/schema.sql"/>
+    <transaction src="src/test/resources/data/h2/import-data.sql"/>
+  </sql>
+  <sql onerror="continue" encoding="UTF-8" userid="${quartz.jdbc.username}" driver="${quartz.jdbc.driver}" src="src/main/resources/sql/h2/quartz.sql" password="${quartz.jdbc.password}" url="${quartz.jdbc.url}">
+    <classpath refid="maven.test.classpath"/>
+  </sql>
+</target>
+</project>
